@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
 	},
-	stepper: {
-		backgroundColor: theme.palette.info.main
-	},
 	stepLabel: {
 		'& span': {
 			fontSize: '1.3rem',
@@ -73,7 +70,7 @@ export default function Nav() {
 
 	return (
 		<div className={styles.root}>
-			<Stepper activeStep={activeStep} orientation="vertical" className={styles.stepper}>
+			<Stepper activeStep={activeStep} orientation="vertical">
 				{steps.map((label, index) => (
 					<Step key={label}>
 						<StepLabel className={styles.stepLabel} >{label}</StepLabel>

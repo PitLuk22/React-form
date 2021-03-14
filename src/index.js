@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom'
+import DataProvider from './components/DataContext'
 
 ReactDOM.render(
-	<>
-		<CssBaseline>
-			<Router>
-				<App />
-			</Router>
-		</CssBaseline>
-	</>,
+	<Router>
+		{/* <CssBaseline /> */}
+		<DataProvider>
+			<App />
+		</DataProvider>
+	</Router>,
 	document.getElementById('root')
 );
