@@ -4,11 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const MainContainer = ({ children, ...props }) => {
 	const styles = useStyles();
-	return (
-		<div className="app">
-			<Container className={styles.root} maxWidth='md' {...props}>{children}</Container>
-		</div>
-	);
+	return <Container className={styles.root} maxWidth='md' {...props}>{children}</Container>
 }
 
 export default MainContainer;
@@ -19,6 +15,6 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100vh',
-		backgroundColor: theme.palette.background.paper
+		backgroundColor: theme.palette.background[900]
 	}
 }))
