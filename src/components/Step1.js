@@ -10,6 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // mui
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 // Context
 import { useData } from './DataContext';
 
@@ -33,6 +35,7 @@ const schema = yup.object().shape({
 })
 
 const Step1 = () => {
+	const styles = useStyles();
 	const { data: { step }, setStep } = useData();
 
 	const { register, handleSubmit, errors } = useForm({
@@ -40,14 +43,18 @@ const Step1 = () => {
 		resolver: yupResolver(schema)
 	});
 
-	const onSubmit = (data) => {
+	const onSubmit = (data, e) => {
 		console.log(data);
 		setStep(step + 1);
 	}
-	console.log(errors.age);
+
 	return (
 		<>
-			<Typography variant='h4' align='center' display='block' gutterBottom={true}>Introduction</Typography>
+			<Box m={4}>
+				<Typography component='h2' variant='h4' align='center' className={styles.title}>
+					Introduction
+				</Typography>
+			</Box>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					ref={register}
@@ -83,3 +90,9 @@ const Step1 = () => {
 }
 
 export default Step1;
+
+const useStyles = makeStyles((theme) => ({
+	title: {
+		fontFamily: theme.typography.titleFontFamily,
+	}
+}))

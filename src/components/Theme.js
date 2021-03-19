@@ -1,6 +1,6 @@
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import cyan from '@material-ui/core/colors/cyan';
-import grey from '@material-ui/core/colors/grey'
+import grey from '@material-ui/core/colors/grey';
 
 export const Theme = ({ children, currentTheme }) => {
 	return <ThemeProvider theme={currentTheme ? themeDark : themeLight}>{children}</ThemeProvider>
@@ -21,6 +21,9 @@ export const themeDark = createMuiTheme({
 		}
 
 	},
+	typography: {
+		titleFontFamily: 'Berkshire Swash, cursive'
+	},
 })
 export const themeLight = createMuiTheme({
 	palette: {
@@ -28,6 +31,9 @@ export const themeLight = createMuiTheme({
 		primary: {
 			main: cyan[400]
 		}
-	}
+	},
+	typography: {
+		titleFontFamily: 'Berkshire Swash, cursive'
+	},
 })
 

@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react';
+// Components
 import MainContainer from './MainContainer';
 import Nav from './Nav';
-import { Route } from 'react-router-dom'
-import { Grid, Typography, Switch, FormControlLabel } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
 import Step1 from './Step1';
 import Step2 from './Step2';
+// Router
+import { Route } from 'react-router-dom'
+// mui
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+
 
 const Step3 = () => <div>Step 3</div>
 const Step4 = () => <div>Step 4</div>
 
 
-
-
-const Main = ({ theme, setTheme }) => {
+const FormPage = ({ theme, setTheme }) => {
 
 	const styles = useStyles()
 
@@ -26,14 +32,16 @@ const Main = ({ theme, setTheme }) => {
 		<MainContainer>
 			<Grid component='main' container className={styles.main}>
 				<Grid item xs={6} component='aside' className={styles.left}>
-					<Typography variant='h4' align='center' className={styles.title}>Gorgeous Form</Typography>
+					<Box m={4}>
+						<Typography component='h2' variant='h4' align='center' className={styles.title}>Gorgeous Form</Typography>
+					</Box>
 					<Nav />
 					<FormControlLabel
 						label={theme ? 'Dark mode' : 'Light mode'}
 						control={<StyledSwitch checked={theme} onChange={handleChange} name="mode" />}
 					/>
 				</Grid>
-				<Grid item container xs={6} component='section' className={styles.right} direction="column" justify="center" alignItems="center">
+				<Grid item container xs={6} component='section' className={styles.right} direction="column" justify="flex-start" alignItems="center">
 					<Route exact path='/' component={Step1} />
 					<Route path='/step2' component={Step2} />
 					<Route path='/step3' component={Step3} />
@@ -44,7 +52,7 @@ const Main = ({ theme, setTheme }) => {
 	)
 }
 
-export default Main
+export default FormPage;
 
 const StyledSwitch = withStyles((theme) => ({
 	switchBase: {
@@ -59,8 +67,7 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: theme.shadows[20],
 	},
 	title: {
-		padding: theme.spacing(3, 0),
-		color: theme.palette.text.primary
+		fontFamily: theme.typography.titleFontFamily,
 	},
 	left: {
 		alignItems: 'center',

@@ -10,7 +10,6 @@ const DataContext = ({ children }) => {
 	})
 
 	useEffect(() => {
-		console.log('useEffect');
 		if (data.step > 0) {
 			history.push(`/step${data.step + 1}`)
 		} else {

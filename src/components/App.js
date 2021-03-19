@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Theme } from './Theme';
-import Main from './Main';
+import FormPage from './FormPage';
 import DataProvider from './DataContext';
 import { CssBaseline, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ const App = ({ setTheme, theme }) => {
 	return (
 		<Box className={styles.root}>
 			<DataProvider>
-				<Main setTheme={setTheme} theme={theme} />
+				<FormPage setTheme={setTheme} theme={theme} />
 			</DataProvider>
 		</Box>
 	);
