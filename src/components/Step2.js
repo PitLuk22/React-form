@@ -4,16 +4,15 @@ import Form from './Form';
 import Input from './Input';
 import FormButton from './FormButton';
 import Countries from './Counties';
+import FormTitle from './FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 // mui
-import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Box from '@material-ui/core/Box';
 // Context
 import { useData } from './DataContext';
 import parsePhoneNumber from 'libphonenumber-js';
@@ -55,9 +54,7 @@ const Step2 = () => {
 
 	return (
 		<>
-			<Box m={4}>
-				<Typography component='h2' variant='h4' align='center' display='block' gutterBottom={true}>Contacts</Typography>
-			</Box>
+			<FormTitle>Contacts</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					ref={register}

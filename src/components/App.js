@@ -29,7 +29,8 @@ const AppWithTheme = () => {
 		<Theme currentTheme={theme}>
 			<CssBaseline />
 			<App setTheme={setTheme} theme={theme} />
-		</Theme>)
+		</Theme>
+	)
 }
 
 export default AppWithTheme;

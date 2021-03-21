@@ -14,6 +14,11 @@ const useStyles = makeStyles(() => ({
 	item: {
 		borderRadius: '10px',
 		padding: '3px 10px 1px 10px'
+	},
+	flag: {
+		'& span': {
+			fontSize: '20px'
+		}
 	}
 }));
 
@@ -21,22 +26,27 @@ const countryCode = [
 	{
 		country: 'Russian Federation',
 		label: 'RU',
+		flag: '🇷🇺'
 	},
 	{
 		country: 'USA',
 		label: 'US',
+		flag: '🇺🇸'
 	},
 	{
 		country: 'Germany',
 		label: 'DE',
+		flag: '🇩🇪'
 	},
 	{
 		country: 'Belarus',
 		label: 'BY',
+		flag: '🇧🇾'
 	},
 	{
 		country: 'United Kingdom',
 		label: 'GB',
+		flag: '🇬🇧'
 	},
 ];
 
@@ -65,7 +75,7 @@ export default function SimpleListMenu({ setCountryCode }) {
 		<div className={styles.root}>
 			<List aria-label="Country code">
 				<ListItem button className={styles.item} onClick={handleClickListItem}>
-					<ListItemText primary={countryCode[selectedIndex].label} />
+					<ListItemText primary={countryCode[selectedIndex].flag} className={styles.flag} />
 				</ListItem>
 			</List>
 			<Menu

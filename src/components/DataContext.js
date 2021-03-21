@@ -1,5 +1,6 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+
 export const Context = createContext();
 
 const DataContext = ({ children }) => {

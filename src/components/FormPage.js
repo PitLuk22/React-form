@@ -4,6 +4,7 @@ import MainContainer from './MainContainer';
 import Nav from './Nav';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import Step3 from './Step3';
 // Router
 import { Route } from 'react-router-dom'
 // mui
@@ -16,7 +17,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 
 
-const Step3 = () => <div>Step 3</div>
+// const Step1 = () => <div>Step 1</div>
+// const Step2 = () => <div>Step 2</div>
+// const Step3 = () => <div>Step 3</div>
 const Step4 = () => <div>Step 4</div>
 
 
