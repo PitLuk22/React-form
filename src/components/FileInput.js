@@ -15,7 +15,16 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 
 const FileInput = ({ control, name }) => {
-	const styles = useStyles()
+	const styles = useStyles();
+
+	const addDots = (fileName) => {
+		const length = fileName.length;
+		if (length > 25) {
+			const type = fileName.split('.').slice(-1, length - 1)
+			return fileName.slice(0, 24) + '... .' + type
+		}
+		return fileName
+	}
 	return (
 		<Controller
 			control={control}
@@ -30,7 +39,7 @@ const FileInput = ({ control, name }) => {
 								<input {...getInputProps()} name={name} onBlur={onBlur} />
 								<p className={styles.title}>Drag 'n' drop area</p>
 							</Paper>
-							<List>
+							<List className={styles.list}>
 								{value.map((file, index) =>
 									<ListItem key={index}>
 										<ListItemAvatar>
@@ -38,7 +47,7 @@ const FileInput = ({ control, name }) => {
 												<DescriptionIcon />
 											</Avatar>
 										</ListItemAvatar>
-										<ListItemText primary={file.name} secondary={file.size} />
+										<ListItemText primary={addDots(file.name)} secondary={`${file.size / 1000} KB`} />
 									</ListItem>
 								)}
 							</List>
@@ -56,18 +65,26 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
 		height: '150px',
+		border: '1px dashed rgba(0,0,0, .5)',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: theme.spacing(3)
+		marginTop: theme.spacing(3),
+		cursor: 'pointer'
 	},
 	title: {
 		fontSize: '20px',
-		cursor: 'pointer'
+		color: 'grey'
 	},
 	icon: {
 		marginBottom: theme.spacing(2),
-		fontSize: '50px'
+		fontSize: '50px',
+		color: 'grey'
+	},
+	list: {
+		maxHeight: '230px',
+		marginTop: theme.spacing(2),
+		overflowY: 'scroll'
 	}
 }))

@@ -1,22 +1,19 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export const Context = createContext();
 
 const DataContext = ({ children }) => {
-	const history = useHistory();
+	const location = useLocation();
 	const [data, setData] = useState({
 		personalData: {},
 		step: 0
 	})
 
 	useEffect(() => {
-		if (data.step > 0) {
-			history.push(`/step${data.step + 1}`)
-		} else {
-			history.push(`/`)
-		}
-	}, [history, data.step])
+		const step = +location.pathname.replace(/\D/g, '')
+		setStep(step ? step - 1 : 0)
+	}, [location])
 
 	const setValues = (values) => {
 		setData(prevData => {
@@ -28,7 +25,7 @@ const DataContext = ({ children }) => {
 			return { ...prevData, step: value }
 		})
 	}
-
+	console.log(data);
 	return (
 		<Context.Provider value={{ data, setValues, setStep }}>{children}</Context.Provider>
 	)

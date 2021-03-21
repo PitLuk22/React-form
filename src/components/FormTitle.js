@@ -19,6 +19,6 @@ export default FormTitle
 
 const useStyles = makeStyles((theme) => ({
 	title: {
-		fontFamily: theme.typography.titleFontFamily,
+		// fontFamily: theme.typography.titleFontFamily,
 	}
 }))

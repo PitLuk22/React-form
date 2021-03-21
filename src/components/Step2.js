@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 // Components
 import Form from './Form';
 import Input from './Input';
-import FormButton from './FormButton';
+import { FormButton } from './FormButton';
 import Countries from './Counties';
 import FormTitle from './FormTitle';
 // Form validation
@@ -26,11 +27,18 @@ const schema = yup.object().shape({
 })
 
 const Step2 = () => {
+	const history = useHistory();
+
 	const [countryCode, setCountryCode] = useState('RU');
-	const { data: { step }, setStep } = useData();
+	const { data: { personalData, step }, setValues, setStep } = useData();
 
 	const { register, handleSubmit, errors, watch } = useForm({
 		mode: 'onBlur',
+		defaultValues: {
+			email: personalData.email,
+			hasPhone: personalData.hasPhone,
+			phone: personalData.phone,
+		},
 		resolver: yupResolver(schema)
 	});
 
@@ -48,8 +56,8 @@ const Step2 = () => {
 
 	// Submit From
 	const onSubmit = (data) => {
-		console.log(data);
-		setStep(step + 1);
+		history.push('/step3')
+		setValues(data)
 	}
 
 	return (
@@ -69,7 +77,14 @@ const Step2 = () => {
 				<FormControlLabel
 					label='Do you have a phone?'
 					control={
-						<Checkbox inputRef={register} name='hasPhone' color='primary' />
+						<Checkbox
+							// these two props need for display checkbox item correctly
+							defaultValue={personalData.hasPhone}
+							defaultChecked={personalData.hasPhone}
+							//
+							inputRef={register}
+							name='hasPhone'
+							color='primary' />
 					} />
 
 				{hasPhone &&

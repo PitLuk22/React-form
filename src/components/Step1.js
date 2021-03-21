@@ -1,8 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 // Components
 import Form from './Form';
 import Input from './Input';
-import FormButton from './FormButton';
+import { FormButton } from './FormButton';
 import FormTitle from './FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
@@ -33,16 +34,24 @@ const schema = yup.object().shape({
 })
 
 const Step1 = () => {
-	const { data: { step }, setStep } = useData();
+	const history = useHistory();
+
+	const { data: { personalData, step }, setValues, setStep } = useData();
 
 	const { register, handleSubmit, errors } = useForm({
 		mode: 'onBlur',
+		defaultValues: {
+			firstName: personalData.firstName,
+			secondName: personalData.secondName,
+			age: personalData.age
+		},
 		resolver: yupResolver(schema)
 	});
 
-	const onSubmit = (data, e) => {
-		console.log(data);
-		setStep(step + 1);
+	const onSubmit = (data) => {
+		history.push('/step2')
+		// setStep(step + 1);
+		setValues(data)
 	}
 
 	return (

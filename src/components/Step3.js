@@ -1,8 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 // Components
 import Form from './Form';
 import FileInput from './FileInput';
-import FormButton from './FormButton';
+import { FormButton } from './FormButton';
 import FormTitle from './FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
@@ -12,22 +13,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useData } from './DataContext';
 
 const Step2 = () => {
+	const history = useHistory();
 	const styles = useStyles();
-	const { data: { step }, setStep } = useData();
+	const { data: { personalData, step }, setValues, setStep } = useData();
 
-	const { control, handleSubmit } = useForm();
+	const { control, handleSubmit } = useForm({
+		defaultValues: {
+			files: personalData.files
+		}
+	});
 
 	// Submit From
 	const onSubmit = (data) => {
-		console.log(data);
-		setStep(step + 1);
+		setValues(data)
+		history.push('/step4')
 	}
 
 	return (
 		<>
 			<FormTitle>Additional files</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)} className={styles.root}>
-				<FileInput control={control} name='file'></FileInput>
+				<FileInput control={control} name='files'></FileInput>
 				<FormButton>Next step</FormButton>
 			</Form>
 		</>
