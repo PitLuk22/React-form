@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+// mui
 import { makeStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, StepContent, Button, Paper, Typography } from '@material-ui/core';
-import { useData } from './DataContext';
+import { useData } from '../DataContext';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	button: {
+		backgroundColor: theme.palette.primary.main,
 		marginTop: theme.spacing(1),
 		marginRight: theme.spacing(1),
 	},
@@ -44,16 +47,17 @@ function getStepContent(step) {
 }
 
 export default function Nav() {
+	const history = useHistory();
 	const styles = useStyles();
 
-	const { data: { step }, setStep } = useData();
+	const { data: { step }, setStep, delValues } = useData();
 	const steps = getSteps();
 
 	const handleReset = () => {
+		delValues()
 		setStep(0);
+		history.push('/')
 	};
-
-
 
 	return (
 		<div className={styles.root}>
@@ -69,7 +73,7 @@ export default function Nav() {
 			</Stepper>
 			{step === steps.length && (
 				<Paper square elevation={0} className={styles.resetContainer}>
-					<Typography>All steps completed - you&apos;re finished</Typography>
+					<Typography>Congratulations! <br /> All steps were completed - you&apos;re finished</Typography>
 					<Button onClick={handleReset} className={styles.button}>Reset</Button>
 				</Paper>
 			)}

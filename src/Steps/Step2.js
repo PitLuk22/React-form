@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // Components
-import Form from './Form';
-import Input from './Input';
-import { FormButton } from './FormButton';
-import Countries from './Counties';
-import FormTitle from './FormTitle';
+import Form from '../components/Form';
+import Input from '../components/Input';
+import { FormButton } from '../components/FormButton';
+import Countries from '../components/Counties';
+import FormTitle from '../components/FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -15,7 +15,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 // Context
-import { useData } from './DataContext';
+import { useData } from '../DataContext';
 import parsePhoneNumber from 'libphonenumber-js';
 
 
@@ -30,7 +30,7 @@ const Step2 = () => {
 	const history = useHistory();
 
 	const [countryCode, setCountryCode] = useState('RU');
-	const { data: { personalData, step }, setValues, setStep } = useData();
+	const { data: { personalData }, setValues } = useData();
 
 	const { register, handleSubmit, errors, watch } = useForm({
 		mode: 'onBlur',
@@ -62,7 +62,7 @@ const Step2 = () => {
 
 	return (
 		<>
-			<FormTitle>Contacts</FormTitle>
+			<FormTitle margin={4}>Contacts</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					ref={register}

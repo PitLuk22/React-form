@@ -13,7 +13,10 @@ export const themeDark = createMuiTheme({
 			main: '#1de9b6',
 		},
 		secondary: {
-			main: '#1de9b6',
+			main: '#FFCB8B'
+		},
+		text: {
+			individual: 'rgba(0,0,0, .8)'
 		},
 		background: {
 			...grey,
@@ -22,7 +25,7 @@ export const themeDark = createMuiTheme({
 
 	},
 	typography: {
-		titleFontFamily: 'Berkshire Swash, cursive'
+		fontFamily: 'Sora, sans-serif'
 	},
 })
 export const themeLight = createMuiTheme({
@@ -30,10 +33,16 @@ export const themeLight = createMuiTheme({
 		type: 'light',
 		primary: {
 			main: cyan[400]
-		}
+		},
+		secondary: {
+			main: '#A771FE'
+		},
+		text: {
+			individual: 'rgba(0,0,0, .8)'
+		},
 	},
 	typography: {
-		titleFontFamily: 'Berkshire Swash, cursive'
+		fontFamily: 'Sora, sans-serif'
 	},
 })
 

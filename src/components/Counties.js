@@ -57,7 +57,6 @@ export default function SimpleListMenu({ setCountryCode }) {
 	const [selectedIndex, setSelectedIndex] = React.useState(0);
 
 	const handleClickListItem = (event) => {
-		console.log(event.currentTarget);
 		setAnchorEl(event.currentTarget);
 	};
 

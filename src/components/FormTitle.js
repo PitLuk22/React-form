@@ -1,13 +1,11 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
 
-const FormTitle = ({ children }) => {
-	const styles = useStyles();
+const FormTitle = ({ children, margin }) => {
 	return (
-		<Box m={4}>
-			<Typography component='h2' variant='h4' align='center' className={styles.title}>
+		<Box m={margin}>
+			<Typography component='h2' variant='h4' align='center'>
 				{children}
 			</Typography>
 		</Box>
@@ -16,9 +14,3 @@ const FormTitle = ({ children }) => {
 
 export default FormTitle
 
-
-const useStyles = makeStyles((theme) => ({
-	title: {
-		// fontFamily: theme.typography.titleFontFamily,
-	}
-}))

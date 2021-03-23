@@ -10,16 +10,16 @@ export const FormButton = ({ children }) => {
 		<Button type='submit' variant='contained' color='primary' fullWidth className={styles.root}>{children}</Button>
 	)
 }
-export const LinkButton = ({ children, to }) => {
+export const LinkButton = ({ children, ...props }) => {
 	const styles = useStyles();
 	return (
-		<Button component={Link} to={to} variant='contained' color='primary' fullWidth className={styles.root}>{children}</Button>
+		<Button {...props} component={Link} variant='contained' fullWidth className={styles.root}>{children}</Button>
 	)
 }
 
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		marginTop: theme.spacing(2)
+		marginTop: theme.spacing(2),
 	}
 }))

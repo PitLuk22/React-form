@@ -1,4 +1,6 @@
 import React from 'react';
+// utils
+import { addDots } from '../utils'; // it takes a file name and max number of letters
 // Dropzone
 import Dropzone from 'react-dropzone';
 // React-hook-form
@@ -9,6 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DescriptionIcon from '@material-ui/icons/Description';
+import ImageIcon from '@material-ui/icons/Image';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -17,14 +20,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const FileInput = ({ control, name }) => {
 	const styles = useStyles();
 
-	const addDots = (fileName) => {
-		const length = fileName.length;
-		if (length > 25) {
-			const type = fileName.split('.').slice(-1, length - 1)
-			return fileName.slice(0, 24) + '... .' + type
-		}
-		return fileName
-	}
 	return (
 		<Controller
 			control={control}
@@ -44,10 +39,10 @@ const FileInput = ({ control, name }) => {
 									<ListItem key={index}>
 										<ListItemAvatar>
 											<Avatar>
-												<DescriptionIcon />
+												{file.type.includes('image') ? <ImageIcon /> : <DescriptionIcon />}
 											</Avatar>
 										</ListItemAvatar>
-										<ListItemText primary={addDots(file.name)} secondary={`${file.size / 1000} KB`} />
+										<ListItemText primary={addDots(file.name, 25)} secondary={`${file.size / 1000} KB`} />
 									</ListItem>
 								)}
 							</List>

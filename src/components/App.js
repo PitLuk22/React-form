@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Theme } from './Theme';
 import FormPage from './FormPage';
-import DataProvider from './DataContext';
+import DataProvider from '../DataContext';
 import { CssBaseline, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 

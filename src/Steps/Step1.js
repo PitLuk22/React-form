@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 // Components
-import Form from './Form';
-import Input from './Input';
-import { FormButton } from './FormButton';
-import FormTitle from './FormTitle';
+import Form from '../components/Form';
+import Input from '../components/Input';
+import { FormButton } from '../components/FormButton';
+import FormTitle from '../components/FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // mui
 import InputAdornment from '@material-ui/core/InputAdornment';
 // Context
-import { useData } from './DataContext';
+import { useData } from '../DataContext';
 
 const schema = yup.object().shape({
 	firstName: yup
@@ -36,7 +36,7 @@ const schema = yup.object().shape({
 const Step1 = () => {
 	const history = useHistory();
 
-	const { data: { personalData, step }, setValues, setStep } = useData();
+	const { data: { personalData }, setValues } = useData();
 
 	const { register, handleSubmit, errors } = useForm({
 		mode: 'onBlur',
@@ -50,13 +50,12 @@ const Step1 = () => {
 
 	const onSubmit = (data) => {
 		history.push('/step2')
-		// setStep(step + 1);
 		setValues(data)
 	}
 
 	return (
 		<>
-			<FormTitle>Introduce</FormTitle>
+			<FormTitle margin={4}>Introduce</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					ref={register}
