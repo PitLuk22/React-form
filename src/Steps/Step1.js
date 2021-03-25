@@ -35,15 +35,14 @@ const schema = yup.object().shape({
 
 const Step1 = () => {
 	const history = useHistory();
-
 	const { data: { personalData }, setValues } = useData();
 
 	const { register, handleSubmit, errors } = useForm({
 		mode: 'onBlur',
 		defaultValues: {
-			firstName: personalData.firstName,
-			secondName: personalData.secondName,
-			age: personalData.age
+			firstName: JSON.parse(localStorage.getItem('data'))?.firstName ? JSON.parse(localStorage.getItem('data')).firstName : personalData.firstName,
+			secondName: JSON.parse(localStorage.getItem('data'))?.secondName ? JSON.parse(localStorage.getItem('data')).secondName : personalData.secondName,
+			age: JSON.parse(localStorage.getItem('data'))?.age ? JSON.parse(localStorage.getItem('data')).age : personalData.age,
 		},
 		resolver: yupResolver(schema)
 	});
@@ -84,7 +83,7 @@ const Step1 = () => {
 					}}
 					error={!!errors.age}
 					helperText={errors?.age?.message} />
-				<FormButton>Next step</FormButton>
+				<FormButton color='primary'>Next step</FormButton>
 			</Form>
 		</>
 	)

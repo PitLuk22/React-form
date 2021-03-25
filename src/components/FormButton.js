@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-export const FormButton = ({ children }) => {
+export const FormButton = ({ children, ...props }) => {
 	const styles = useStyles();
 	return (
-		<Button type='submit' variant='contained' color='primary' fullWidth className={styles.root}>{children}</Button>
+		<Button {...props} type='submit' variant='contained' fullWidth className={styles.root}>{children}</Button>
 	)
 }
 export const LinkButton = ({ children, ...props }) => {

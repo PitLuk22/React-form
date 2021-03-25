@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 // utils
 import { addDots } from '../utils'; // it takes a file name and max number of letters
 // Components
-import { LinkButton } from '../components/FormButton';
+import Spinner from '../components/Spinner';
+import { FormButton, LinkButton } from '../components/FormButton';
 import Popover from '../components/Popover';
 import FormTitle from '../components/FormTitle';
 // mui
@@ -49,15 +51,20 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Step1 = () => {
+	const history = useHistory();
 	const styles = useStyles();
+
+	let [loading, setLoading] = useState(false);
 	const { data: { personalData }, setSuccess } = useData();
+
+	const res = Object.keys(personalData).length > 0 ? personalData : JSON.parse(localStorage.getItem('data'))
 	// get the next array [[field, value], [field2, value2]] without files
-	const entries = Object.entries(personalData).filter(item => item[0] !== 'files' && item[0] !== 'hasPhone')
+	const entries = Object.entries(res).filter(item => item[0] !== 'files' && item[0] !== 'hasPhone')
 	// get array of files
 	const files = personalData.files;
 
 	const onSubmit = async () => {
-
+		setLoading(true)
 		// Way with FORM DATA
 
 		// const formData = new FormData();
@@ -69,17 +76,23 @@ const Step1 = () => {
 		// entries.forEach(entrie => {
 		// 	formData.append(entrie[0], entrie[1])
 		// })
-		// const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+		// const response = await fetch('YOUR SERVER', {
 		// 	method: 'POST',
 		// 	body: formData
 		// })
 		// console.log(Array.from(formData))
 
-		// Way with EmailJS
-		const filesNames = files.map(file => file.name).join(', ')
-		const newPersonalData = { ...personalData, files: filesNames }
+		// Way with EmailJS	
+		let dataToSend = {}
+		if (files?.length > 0) {
+			console.log('i am in');
+			const filesNames = files.map(file => file.name).join(', ')
+			dataToSend = { ...personalData, files: filesNames }
+		} else {
+			dataToSend = { ...personalData }
+		}
 
-		const res = await emailjs.send('service_fm6xt7m', 'template_t810s0b', newPersonalData, 'user_JLgwZlMBwL9JO4Gwj44lF')
+		const res = await emailjs.send('service_fm6xt7m', 'template_t810s0b', dataToSend, 'user_JLgwZlMBwL9JO4Gwj44lF')
 
 		if (res.status === 200) {
 			setSuccess(true)
@@ -87,6 +100,8 @@ const Step1 = () => {
 			setSuccess(false)
 			throw new Error('Something went wrong!')
 		}
+		setLoading(false)
+		history.push('/step5')
 	}
 
 
@@ -113,7 +128,7 @@ const Step1 = () => {
 				</Table>
 			</TableContainer>
 
-			{files.length > 0 && <TableContainer component={Paper} className={styles.container}>
+			{files?.length > 0 && <TableContainer component={Paper} className={styles.container}>
 				<Table stickyHeader aria-label="sticky table">
 					<TableHead>
 						<TableRow>
@@ -142,7 +157,7 @@ const Step1 = () => {
 			</TableContainer>}
 
 			<LinkButton to='/' color='secondary'>Back to the beginning</LinkButton>
-			<LinkButton to='/step5' color='primary' onClick={onSubmit}>Submit</LinkButton>
+			<FormButton color='primary' onClick={onSubmit}>{loading ? <Spinner /> : 'Submit'}</FormButton>
 		</>
 	)
 }

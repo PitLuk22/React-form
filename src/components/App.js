@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Theme } from './Theme';
 import FormPage from './FormPage';
 import DataProvider from '../DataContext';
@@ -24,7 +24,13 @@ const App = ({ setTheme, theme }) => {
 }
 
 const AppWithTheme = () => {
-	const [theme, setTheme] = useState(false)
+	const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'dark');
+
+	// set themeMode into localStorage
+	useEffect(() => {
+		localStorage.setItem('theme', theme)
+	}, [theme])
+
 	return (
 		<Theme currentTheme={theme}>
 			<CssBaseline />

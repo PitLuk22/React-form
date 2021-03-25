@@ -35,9 +35,9 @@ const Step2 = () => {
 	const { register, handleSubmit, errors, watch } = useForm({
 		mode: 'onBlur',
 		defaultValues: {
-			email: personalData.email,
-			hasPhone: personalData.hasPhone,
-			phone: personalData.phone,
+			email: JSON.parse(localStorage.getItem('data'))?.email ? JSON.parse(localStorage.getItem('data')).email : personalData.email,
+			hasPhone: JSON.parse(localStorage.getItem('data'))?.hasPhone ? Boolean(JSON.parse(localStorage.getItem('data')).hasPhone) : personalData.hasPhone,
+			phone: JSON.parse(localStorage.getItem('data'))?.phone ? JSON.parse(localStorage.getItem('data')).phone : personalData.phone,
 		},
 		resolver: yupResolver(schema)
 	});
@@ -104,7 +104,7 @@ const Step2 = () => {
 						}}
 					/>
 				}
-				<FormButton>Next step</FormButton>
+				<FormButton color='primary'>Next step</FormButton>
 			</Form>
 		</>
 	)

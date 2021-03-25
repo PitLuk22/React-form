@@ -11,7 +11,7 @@ const DataContext = ({ children }) => {
 	const [data, setData] = useState({
 		personalData: {},
 		step: 0,
-		isSuccess: false
+		isSuccess: false,
 	})
 
 	// Steps need for Nav component
@@ -25,15 +25,29 @@ const DataContext = ({ children }) => {
 		}
 	}, [location, history])
 
+	useEffect(() => {
+		if (localStorage.getItem('data')) {
+			setValues(JSON.parse(localStorage.getItem('data')))
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	const setValues = (values) => {
 		setData(prevData => {
 			return { ...prevData, personalData: { ...data.personalData, ...values } }
 		})
+
+		if (!values.hasOwnProperty('files')) {
+			const prevLocalValues = JSON.parse(localStorage.getItem('data')) || {};
+			localStorage.setItem('data', JSON.stringify({ ...prevLocalValues, ...values }))
+		}
 	}
+
 	const delValues = () => {
 		setData(prevData => {
 			return { ...prevData, personalData: {} }
 		})
+		localStorage.removeItem('data')
 	}
 	const setStep = (value) => {
 		setData(prevData => {

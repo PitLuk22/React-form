@@ -3,7 +3,8 @@ import cyan from '@material-ui/core/colors/cyan';
 import grey from '@material-ui/core/colors/grey';
 
 export const Theme = ({ children, currentTheme }) => {
-	return <ThemeProvider theme={currentTheme ? themeDark : themeLight}>{children}</ThemeProvider>
+
+	return <ThemeProvider theme={currentTheme === 'light' ? themeLight : themeDark}>{children}</ThemeProvider>
 }
 
 export const themeDark = createMuiTheme({

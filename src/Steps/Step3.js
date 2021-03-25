@@ -34,7 +34,7 @@ const Step2 = () => {
 			<FormTitle margin={4}>Additional files</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)} className={styles.root}>
 				<FileInput control={control} name='files'></FileInput>
-				<FormButton>Next step</FormButton>
+				<FormButton color='primary'>Next step</FormButton>
 			</Form>
 		</>
 	)
