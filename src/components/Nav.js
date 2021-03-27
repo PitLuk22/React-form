@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 // mui
 import { makeStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, StepContent, Button, Paper, Typography } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+// Context
 import { useData } from '../DataContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function getSteps() {
-	return ['Introduction', 'Contacts', 'Additional files', 'Confirmation'];
-}
-
 function getStepContent(step) {
 	switch (step) {
 		case 0:
@@ -46,12 +44,13 @@ function getStepContent(step) {
 	}
 }
 
-export default function Nav() {
+export default function Nav({ steps }) {
 	const history = useHistory();
 	const styles = useStyles();
+	const isHorizontal = useMediaQuery('(max-width:760px)');
+	const isMobile = useMediaQuery('(max-width: 500px)');
 
 	const { data: { step }, setStep, delValues } = useData();
-	const steps = getSteps();
 
 	const handleReset = () => {
 		delValues()
@@ -61,22 +60,41 @@ export default function Nav() {
 
 	return (
 		<div className={styles.root}>
-			<Stepper activeStep={step} orientation="vertical">
-				{steps.map((label, index) => (
-					<Step key={label}>
-						<StepLabel className={styles.stepLabel} >{label}</StepLabel>
-						<StepContent>
-							<Typography >{getStepContent(index)}</Typography>
-						</StepContent>
-					</Step>
-				))}
-			</Stepper>
+
+			{isHorizontal && step === steps.length
+				? null
+				: isHorizontal
+					? <Stepper activeStep={step} alternativeLabel>
+						{steps.map((label) => (
+							<Step key={label}>
+								<StepLabel>{isMobile ? '' : label}</StepLabel>
+							</Step>
+						))}
+					</Stepper>
+					: <Stepper activeStep={step} orientation="vertical">
+						{steps.map((label, index) => (
+							<Step key={label}>
+								<StepLabel className={styles.stepLabel} >{label}</StepLabel>
+								<StepContent>
+									<Typography >{getStepContent(index)}</Typography>
+								</StepContent>
+							</Step>
+						))}
+					</Stepper>
+			}
+
 			{step === steps.length && (
-				<Paper square elevation={0} className={styles.resetContainer}>
-					<Typography>Congratulations! <br /> All steps were completed - you&apos;re finished</Typography>
-					<Button onClick={handleReset} className={styles.button}>Reset</Button>
-				</Paper>
+				<ResetButton styles={styles} handleReset={handleReset} />
 			)}
 		</div>
-	);
+	)
+}
+
+const ResetButton = ({ styles, handleReset }) => {
+	return (
+		<Paper square elevation={0} className={styles.resetContainer}>
+			<Typography>Congratulations! <br /> All steps were completed - you&apos;re finished</Typography>
+			<Button onClick={handleReset} className={styles.button}>Reset</Button>
+		</Paper>
+	)
 }

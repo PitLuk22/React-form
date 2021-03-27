@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import { FormButton } from '../components/FormButton';
-import FormTitle from '../components/FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -54,7 +53,6 @@ const Step1 = () => {
 
 	return (
 		<>
-			<FormTitle margin={4}>Introduce</FormTitle>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					ref={register}

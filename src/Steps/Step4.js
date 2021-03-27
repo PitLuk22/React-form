@@ -6,7 +6,6 @@ import { addDots } from '../utils'; // it takes a file name and max number of le
 import Spinner from '../components/Spinner';
 import { FormButton, LinkButton } from '../components/FormButton';
 import Popover from '../components/Popover';
-import FormTitle from '../components/FormTitle';
 // mui
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -108,7 +107,6 @@ const Step1 = () => {
 
 	return (
 		<>
-			<FormTitle margin={2}>Confirmation</FormTitle>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>

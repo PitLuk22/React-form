@@ -17,11 +17,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+// Context 
+import { useData } from '../DataContext'
 
+function getSteps() {
+	return ['Introduction', 'Contacts', 'Additional files', 'Confirmation'];
+}
 
 const FormPage = ({ theme, setTheme }) => {
 
 	const styles = useStyles()
+	const isSmallScreen = useMediaQuery('(max-width:760px)');
+	const { data: { step } } = useData();
 
 	const handleChange = () => {
 		setTheme(theme === 'light' ? 'dark' : 'light')
@@ -30,13 +38,22 @@ const FormPage = ({ theme, setTheme }) => {
 	return (
 		<MainContainer>
 			<Grid component='main' container className={styles.main}>
-				<Grid item xs={6} component='aside' className={styles.left}>
-					<Box m={4}>
-						<Typography component='h2' variant='h4' align='center' className={styles.title}>Gorgeous Form</Typography>
+
+				<Grid item xs={12} md={6} component='nav' className={styles.left}>
+					<Box m={isSmallScreen ? 0 : 4}>
+						<Typography component='h2' variant='h4' align='center' className={styles.title}>
+							{isSmallScreen ? getSteps()[step] : 'Gorgeous Form'}
+						</Typography>
 					</Box>
-					<Nav />
+					<Nav steps={getSteps()} />
 				</Grid>
-				<Grid item container xs={6} component='section' className={styles.right} direction="column" justify="flex-start" alignItems="center">
+
+				<Grid item container xs={12} md={6} component='section' className={styles.right} direction="column" justify="flex-start" alignItems="center">
+					{!isSmallScreen && <Box m={4}>
+						<Typography component='h2' variant='h4' align='center' className={styles.title}>
+							{getSteps()[step]}
+						</Typography>
+					</Box>}
 					<FormControlLabel
 						className={styles.switch}
 						control={<AntSwitch checked={theme === 'dark' ? false : true} onChange={handleChange} name="mode" />}
@@ -47,12 +64,65 @@ const FormPage = ({ theme, setTheme }) => {
 					<Route path='/step4' component={Step4} />
 					<Route path='/step5' component={Step5} />
 				</Grid>
+
 			</Grid>
 		</MainContainer>
 	)
 }
 
 export default FormPage;
+
+const useStyles = makeStyles((theme) => ({
+	main: {
+		height: '90%',
+		borderRadius: theme.typography.round(15),
+		boxShadow: theme.shadows[20],
+		[theme.breakpoints.down('sm')]: {
+			height: '75%',
+			marginTop: "50px"
+		}
+	},
+	title: {
+		fontSize: 30,
+		fontFamily: theme.typography.titleFontFamily,
+	},
+	left: {
+		alignItems: 'center',
+		backgroundColor: theme.palette.background.paper,
+		padding: theme.spacing(3),
+		height: '100%',
+		borderTopLeftRadius: theme.typography.round(15),
+		borderBottomLeftRadius: theme.typography.round(15),
+		[theme.breakpoints.down('sm')]: {
+			height: '30%',
+			minHeight: '200px',
+			borderTopRightRadius: theme.typography.round(15),
+			borderBottomLeftRadius: 0,
+		}
+	},
+	right: {
+		position: 'relative',
+		backgroundColor: theme.palette.background[700],
+		padding: theme.spacing(3),
+		height: '100%',
+		borderTopRightRadius: theme.typography.round(15),
+		borderBottomRightRadius: theme.typography.round(15),
+		[theme.breakpoints.down('sm')]: {
+			height: 'auto',
+			minHeight: '85%',
+			borderTopRightRadius: 0,
+			borderBottomLeftRadius: theme.typography.round(15),
+		}
+	},
+	switch: {
+		position: 'absolute',
+		top: '15px',
+		right: '0px',
+		[theme.breakpoints.down('sm')]: {
+			top: '-13px'
+		}
+	},
+}))
 
 const AntSwitch = withStyles((theme) => ({
 	root: {
@@ -109,36 +179,3 @@ const AntSwitch = withStyles((theme) => ({
 	},
 	checked: {},
 }))(Switch);
-
-
-const useStyles = makeStyles((theme) => ({
-	main: {
-		height: '90%',
-		borderRadius: theme.typography.round(15),
-		boxShadow: theme.shadows[20],
-	},
-	title: {
-		fontFamily: theme.typography.titleFontFamily,
-	},
-	left: {
-		alignItems: 'center',
-		backgroundColor: theme.palette.background.paper,
-		padding: theme.spacing(3),
-		height: '100%',
-		borderTopLeftRadius: theme.typography.round(15),
-		borderBottomLeftRadius: theme.typography.round(15),
-	},
-	right: {
-		position: 'relative',
-		backgroundColor: theme.palette.background[700],
-		padding: theme.spacing(3),
-		height: '100%',
-		borderTopRightRadius: theme.typography.round(15),
-		borderBottomRightRadius: theme.typography.round(15),
-	},
-	switch: {
-		position: 'absolute',
-		top: '15px',
-		right: '0px',
-	},
-}))

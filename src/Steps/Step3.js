@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import Form from '../components/Form';
 import FileInput from '../components/FileInput';
 import { FormButton } from '../components/FormButton';
-import FormTitle from '../components/FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 //mui
@@ -30,13 +29,10 @@ const Step2 = () => {
 	}
 
 	return (
-		<>
-			<FormTitle margin={4}>Additional files</FormTitle>
-			<Form onSubmit={handleSubmit(onSubmit)} className={styles.root}>
-				<FileInput control={control} name='files'></FileInput>
-				<FormButton color='primary'>Next step</FormButton>
-			</Form>
-		</>
+		<Form onSubmit={handleSubmit(onSubmit)} className={styles.root}>
+			<FileInput control={control} name='files'></FileInput>
+			<FormButton color='primary'>Next step</FormButton>
+		</Form>
 	)
 }
 

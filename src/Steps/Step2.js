@@ -5,7 +5,6 @@ import Form from '../components/Form';
 import Input from '../components/Input';
 import { FormButton } from '../components/FormButton';
 import Countries from '../components/Counties';
-import FormTitle from '../components/FormTitle';
 // Form validation
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -61,52 +60,49 @@ const Step2 = () => {
 	}
 
 	return (
-		<>
-			<FormTitle margin={4}>Contacts</FormTitle>
-			<Form onSubmit={handleSubmit(onSubmit)}>
+		<Form onSubmit={handleSubmit(onSubmit)}>
+			<Input
+				ref={register}
+				id='email'
+				type='email'
+				name='email'
+				label='Email'
+				required
+				error={!!errors.email}
+				helperText={errors?.email?.message} />
+
+			<FormControlLabel
+				label='Do you have a phone?'
+				control={
+					<Checkbox
+						// these two props need for display checkbox item correctly
+						defaultValue={personalData.hasPhone}
+						defaultChecked={personalData.hasPhone}
+						//
+						inputRef={register}
+						name='hasPhone'
+						color='primary' />
+				} />
+
+			{hasPhone &&
 				<Input
 					ref={register}
-					id='email'
-					type='email'
-					name='email'
-					label='Email'
-					required
-					error={!!errors.email}
-					helperText={errors?.email?.message} />
-
-				<FormControlLabel
-					label='Do you have a phone?'
-					control={
-						<Checkbox
-							// these two props need for display checkbox item correctly
-							defaultValue={personalData.hasPhone}
-							defaultChecked={personalData.hasPhone}
-							//
-							inputRef={register}
-							name='hasPhone'
-							color='primary' />
-					} />
-
-				{hasPhone &&
-					<Input
-						ref={register}
-						id='phone'
-						type='tel'
-						name='phone'
-						label='Phone'
-						error={!!errors.phone}
-						helperText={errors?.phone?.message}
-						onChange={e => e.target.value = normalizePhoneNumber(e.target.value)}
-						InputProps={{
-							startAdornment: <InputAdornment position="start">
-								<Countries setCountryCode={setCountryCode} />
-							</InputAdornment>,
-						}}
-					/>
-				}
-				<FormButton color='primary'>Next step</FormButton>
-			</Form>
-		</>
+					id='phone'
+					type='tel'
+					name='phone'
+					label='Phone'
+					error={!!errors.phone}
+					helperText={errors?.phone?.message}
+					onChange={e => e.target.value = normalizePhoneNumber(e.target.value)}
+					InputProps={{
+						startAdornment: <InputAdornment position="start">
+							<Countries setCountryCode={setCountryCode} />
+						</InputAdornment>,
+					}}
+				/>
+			}
+			<FormButton color='primary'>Next step</FormButton>
+		</Form>
 	)
 }
 
