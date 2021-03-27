@@ -36,7 +36,6 @@ class ErrorBoundary extends Component {
 	}
 
 	render() {
-		console.log(this.props);
 		if (this.state.errorInfo) {
 			// Error path
 			return (
